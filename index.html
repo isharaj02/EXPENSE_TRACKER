@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Expense Tracker</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+    <header>
+        <h1>Expense Tracker</h1>
+        <button id="themeToggle">🌙</button>
+    </header>
+
+    <!-- ⭐ SUMMARY SECTION -->
+    <section class="summary">
+        <div class="summary-box">
+            <h3>Total Income</h3>
+            <p id="totalIncome">₹0</p>
+        </div>
+        <div class="summary-box">
+            <h3>Total Expense</h3>
+            <p id="totalExpense">₹0</p>
+        </div>
+        <div class="summary-box">
+            <h3>Balance</h3>
+            <p id="balance">₹0</p>
+        </div>
+    </section>
+
+    <!-- ADD TRANSACTION SECTION -->
+    <section class="input-section">
+        <input type="text" id="text" placeholder="Enter Title">
+        <input type="number" id="amount" placeholder="Enter Amount">
+        <select id="type">
+            <option value="income">Income</option>
+            <option value="expense">Expense</option>
+        </select>
+        <button id="addBtn">Add Transaction</button>
+    </section>
+
+    <h2 class="history-title">Transaction History</h2>
+
+    <!-- ⭐ HISTORY LIST -->
+    <ul id="history"></ul>
+
+    <script src="script.js"></script>
+</body>
+</html>
