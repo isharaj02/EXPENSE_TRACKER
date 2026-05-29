@@ -1,4 +1,3 @@
-const text = document.getElementById("text");
 const amount = document.getElementById("amount");
 const type = document.getElementById("type");
 const addBtn = document.getElementById("addBtn");
