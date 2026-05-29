@@ -6,9 +6,51 @@ const history = document.getElementById("history");
 const totalIncome = document.getElementById("totalIncome");
 const totalExpense = document.getElementById("totalExpense");
 const balance = document.getElementById("balance");
+const text = document.getElementById("text");
 
-let income = 0;
-let expense = 0;
+let transactions = JSON.parse(localStorage.getItem("transactions")) || [];
+
+function saveTransactions() {
+    localStorage.setItem("transactions", JSON.stringify(transactions));
+}
+
+function renderTransactions() {
+
+    history.innerHTML = "";
+
+    let income = 0;
+    let expense = 0;
+
+    transactions.forEach((transaction) => {
+
+        const li = document.createElement("li");
+
+        li.classList.add("transaction");
+
+        li.innerHTML = `
+            <span>
+                <strong>${transaction.title}</strong><br>
+                <small>${transaction.date}</small>
+            </span>
+
+            <span style="color:${transaction.type === "income" ? "var(--income)" : "var(--expense)"};">
+                ${transaction.type === "income" ? "+" : "-"} ₹${transaction.amount}
+            </span>
+        `;
+
+        history.prepend(li);
+
+        if (transaction.type === "income") {
+            income += transaction.amount;
+        } else {
+            expense += transaction.amount;
+        }
+    });
+
+    totalIncome.textContent = `₹${income}`;
+    totalExpense.textContent = `₹${expense}`;
+    balance.textContent = `₹${income - expense}`;
+}
 
 // Light / Dark Mode Toggle
 document.getElementById("themeToggle").addEventListener("click", () => {
@@ -34,35 +76,21 @@ addBtn.addEventListener("click", () => {
     const date = new Date();
     const formattedDate = `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`;
 
-    const li = document.createElement("li");
-    li.classList.add("transaction");
-    li.innerHTML = `
-        <span>
-            <strong>${title}</strong><br>
-            <small>${formattedDate}</small>
-        </span>
-        <span style="color:${type.value === "income" ? "var(--income)" : "var(--expense)"};">
-            ${type.value === "income" ? "+" : "-"} ₹${amt}
-        </span>
-    `;
+    const transaction = {
+        title,
+        amount: amt,
+        type: type.value,
+        date: formattedDate
+    };
 
-    history.prepend(li);
+    transactions.push(transaction);
 
-    if (type.value === "income") {
-        income += amt;
-    } else {
-        expense += amt;
-    }
+    saveTransactions();
 
-    updateSummary();
+    renderTransactions();
 
     text.value = "";
     amount.value = "";
 });
 
-// Update Summary
-function updateSummary() {
-    totalIncome.textContent = `₹${income}`;
-    totalExpense.textContent = `₹${expense}`;
-    balance.textContent = `₹${income - expense}`;
-}
+renderTransactions();
