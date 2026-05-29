@@ -34,6 +34,7 @@ header {
     cursor: pointer;
     background: var(--card);
     font-size: 18px;
+    color: var(--text); /*for emoji*/
 }
 
 .summary {
@@ -91,4 +92,44 @@ button {
     border-radius: 6px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+}
+
+.transaction span:first-child {
+    flex: 2;
+    min-width: 0;
+    word-break: break-word;
+}
+
+.transaction span:nth-child(2) {
+    flex: 1; 
+    text-align: right;
+    white-space: nowrap;
+}
+
+.actions {
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0; 
+}
+
+.actions button {
+    background: transparent;
+    padding: 5px;
+    font-size: 16px;
+    border-radius: 4px;
+    transition: transform 0.1s ease;
+}
+
+.actions button:hover {
+    transform: scale(1.15); 
+}
+
+.actions button:active {
+    transform: scale(0.95);
+}
+
+.actions button * {
+    pointer-events: none !important;
 }
