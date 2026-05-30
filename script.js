@@ -7,6 +7,7 @@ const totalIncome = document.getElementById("totalIncome");
 const totalExpense = document.getElementById("totalExpense");
 const balance = document.getElementById("balance");
 const text = document.getElementById("text");
+const category = document.getElementById("category");
 
 let editId = null;
 let transactions = JSON.parse(localStorage.getItem("transactions")) || [];
@@ -44,7 +45,7 @@ function renderTransactions() {
         li.innerHTML = `
             <span>
                 <strong>${transaction.title}</strong><br>
-                <small>${transaction.date}</small>
+                <small>${transaction.date} • ${transaction.category}</small>
             </span>
 
             <span style="color:${transaction.type === "income" ? "var(--income)" : "var(--expense)"}; font-weight: bold;">
@@ -94,6 +95,7 @@ history.addEventListener("click", (e) => {
         if (!txn) return;
         
         text.value = txn.title;
+        category.value = txn.category;
         amount.value = txn.amount;
         type.value = txn.type;
 
@@ -137,7 +139,8 @@ addBtn.addEventListener("click", () => {
                     ...t,
                     title,
                     amount: amt,
-                    type: type.value
+                    type: type.value,
+                    category: category.value
                 };
             }
             return t;
@@ -148,6 +151,7 @@ addBtn.addEventListener("click", () => {
             title,
             amount: amt,
             type: type.value,
+            category: category.value,
             date: new Date().toLocaleDateString()
         };
         transactions.push(transaction);
